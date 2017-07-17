@@ -51,9 +51,14 @@ SDL_GLContext context;
           printf("Unable to initialize Glew. Error: %s\n", glewGetErrorString(glewErr));
           return false;
         }
+        else
+        {
+          glClearColor(0.f, 1.f, 0.5f, 1.f);
+        }
       }
     }
   }
+  return true;
 }
 
 int main(int argc, char** args)
@@ -84,6 +89,7 @@ int main(int argc, char** args)
         }
       }
 
+      glClear(GL_COLOR_BUFFER_BIT);
       SDL_GL_SwapWindow(window);
   }
 

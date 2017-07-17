@@ -4,7 +4,7 @@ CC = g++
 
 INCLUDE_PATHS = -IC:\DevLibs\SDL2-2.0.5\x86_64-w64-mingw32\include -IC:\DevLibs\VS\glew-2.0.0\glew-2.0.0\include
 
-LIBRARY_PATHS = -IC:\DevLibs\SDL2-2.0.5\x86_64-w64-mingw32\lib -LC:\DevLibs\VS\glew-2.0.0\glew-2.0.0\lib\Release\Win32
+LIBRARY_PATHS = -IC:\DevLibs\SDL2-2.0.5\x86_64-w64-mingw32\lib -LC:\DevLibs\glew-2.0.0\glew-2.0.0\lib
 
 COMPILER_FLAGS = -w -Wl, -subsystem,windows
 
