@@ -9,7 +9,7 @@
 
 namespace SDLhandler
 {
-  bool init(const char* title, int windowWidth, int windowHeight, SDL_Window*& window, SDL_GLContext* glContext)
+  bool init(const char* title, int windowWidth, int windowHeight, SDL_Window*& window, SDL_GLContext* glContext, bool fullscreen = false)
   {
     //Check if SDL was initialized correctly (SDL_Init returns a negative value in case it was not able to initialize SDL)
     if( SDL_Init(SDL_INIT_VIDEO) < 0 )
@@ -25,7 +25,9 @@ namespace SDLhandler
       SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
       SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 
-      window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, SDL_WINDOW_OPENGL);
+      //Fullscreen flag
+      Uint32 flags = (fullscreen) ? SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL : SDL_WINDOW_OPENGL;
+      window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, flags);
 
       if(window == NULL)
       {

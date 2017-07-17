@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <iostream>
 #include "util/SDLHandler.h"
 #include "util/filereader.h"
+#include "tinyxml/tinyxml.h"
+#include "tinyxml/tinystr.h"
 using namespace std;
 
 const int WIDTH = 960, HEIGHT = 544;
@@ -9,11 +12,47 @@ SDL_GLContext context;
 
 int main(int argc, char** args)
 {
-  SDLhandler::init("Git I love You", WIDTH, HEIGHT, window, &context);
+  TiXmlDocument doc("../data/config.xml");
+  bool loadokay = doc.LoadFile();
+  if(!loadokay)
+  {
+    printf("Unable to load xml.\n %s\n", doc.ErrorDesc());
+    cin.get(); cin.ignore();
+    return -1;
+  }
+
+  TiXmlElement* root = doc.RootElement();
+  TiXmlElement* configElement = NULL;
+  int count = 0;
+  for(TiXmlElement* e = root->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+  {
+    if(e->Value() == string("CONFIG"))
+    {
+      configElement = e;
+    }
+  }
+  TiXmlElement* configData = configElement->FirstChildElement();
+  int width = 0, height = 0;
+  bool fullscreen = false;
+  string fspath("");
+
+  configData->Attribute("width", &width);
+  configData->Attribute("height", &height);
+  string isFullscreen = configData->Attribute("fullscreen");
+  fspath = configData->Attribute("fragmentshaderpath");
+  if(width != 0 && height != 0)
+  {
+    fullscreen = (isFullscreen == "true") ? true : false;
+    fspath = (fspath == "") ? "../shaders/fs.fs" : fspath;
+    SDLhandler::init("OpenGL Fragment Shader Lab", width, height, window, &context, fullscreen);
+  }
+  else
+  {
+    SDLhandler::init("OpenGL Fragment Shader Lab", WIDTH, HEIGHT, window, &context);
+  }
 
   GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-  string vsst = FileReader::readFile("../shaders/vs.vs");
-  const GLchar* vssource = vsst.c_str();
+  const GLchar* vssource = { "#version 150 core\n in vec2 position;\n uniform float time;\n void main() {\n gl_Position = vec4(position, 0.0, 1.0);  }"};
   glShaderSource(vs, 1, &vssource, NULL);
   GLint vsstatus;
   glCompileShader(vs);
@@ -30,7 +69,7 @@ int main(int argc, char** args)
   }
 
   GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-  string fsst = FileReader::readFile("../shaders/fs.fs");
+  string fsst = FileReader::readFile(fspath.c_str());
   const GLchar* fssource = fsst.c_str();
   glShaderSource(fs, 1, &fssource, NULL);
   GLint fsstatus;

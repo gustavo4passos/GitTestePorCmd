@@ -1,8 +1,8 @@
-OBJS = main.cpp
+OBJS = main.cpp tinyxml/tinyxml.cpp tinyxml/tinystr.cpp tinyxml/tinyxmlparser.cpp tinyxml/tinyxmlerror.cpp data/my.res
 
 CC = g++
 
-INCLUDE_PATHS = -IC:\DevLibs\SDL2-2.0.5\x86_64-w64-mingw32\include -IC:\DevLibs\VS\glew-2.0.0\glew-2.0.0\include
+INCLUDE_PATHS = -IC:\DevLibs\SDL2-2.0.5\x86_64-w64-mingw32\include -IC:\DevLibs\VS\glew-2.0.0\glew-2.0.0\include -IC:\DevLibs\tinyxml
 
 LIBRARY_PATHS = -IC:\DevLibs\SDL2-2.0.5\x86_64-w64-mingw32\lib -LC:\DevLibs\glew-2.0.0\glew-2.0.0\lib
 

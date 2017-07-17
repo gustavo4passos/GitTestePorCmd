@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<ROOT>
+  <CONFIG>
+    <data width="1366" height="768" fullscreen="false" fragmentshaderpath="../shaders/fs.fs"/>
+  </CONFIG>
+</ROOT>
