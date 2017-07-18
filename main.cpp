@@ -122,6 +122,10 @@ int main(int argc, char** args)
   bool running = true;
   while(running)
   {
+      //Toggle fullscreen flag
+      Uint32 flags = (fullscreen) ? 0 : SDL_WINDOW_FULLSCREEN;
+
+      //Handle input events
       SDL_Event e;
       while(SDL_PollEvent(&e) != 0)
       {
@@ -135,6 +139,11 @@ int main(int argc, char** args)
           {
             case SDLK_ESCAPE:
             running = false;
+            break;
+
+            case SDLK_F5:
+            fullscreen = !fullscreen;
+            SDL_SetWindowFullscreen(window, flags);
             break;
 
             default:
